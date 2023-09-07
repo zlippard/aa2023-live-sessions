@@ -54,6 +54,9 @@ material3 = { group = "androidx.compose.material3", name = "material3" , version
 material = { group = "androidx.compose.material", name = "material" }
 navigation = { module = "androidx.navigation:navigation-compose" , version.ref="navigation"}
 coil = { module = "io.coil-kt:coil-compose", version.ref="coil" }
+ui-viewbinding = { group = "androidx.compose.ui", name = "ui-viewbinding" }
+
+# Espresso
 espresso = { module = "androidx.test.espresso:espresso-core", version.ref="espresso" }
 
 fonts = {  module = "androidx.compose.ui:ui-text-google-fonts", version.ref="fonts" }
@@ -71,4 +74,4 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 [bundles]
 androidx-activity = ["androidx-activity", "androidx-activity-ktx", "compose-viewmodel"]
-compose-ui = ["activity-compose", "androidx-compose-foundation", "material-icons", "material-iconsExtended", "material", "material3", "ui", "ui-ui", "ui-tooling", "ui-tooling-preview"]
+compose-ui = ["activity-compose", "androidx-compose-foundation", "material-icons", "material-iconsExtended", "material", "material3", "ui", "ui-ui", "ui-tooling", "ui-tooling-preview", "ui-viewbinding"]
