@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class School {
+    public static final String TAG = "School";
     private final List<Classroom> classrooms;
 
     private final Principal principal = new Principal(
