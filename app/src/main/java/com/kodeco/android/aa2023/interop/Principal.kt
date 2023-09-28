@@ -1,7 +1,7 @@
 package com.kodeco.android.aa2023.interop
 
 data class Principal(
-    val name: String,
-    val age: Int,
+    val principalName: String,
+    val principalAge: Int,
     val credentials: List<Credential>,
-) : Person(name, age)
+) : Person(principalName, principalAge)
