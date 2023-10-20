@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navgraph"
+    app:startDestination="@id/example1Fragment">
+    <fragment
+        android:id="@+id/example1Fragment"
+        android:name="com.kodeco.android.aa2023.Example1Fragment"
+        android:label="Example1Fragment" >
+        <action
+            android:id="@+id/action_example1Fragment_to_example2Fragment"
+            app:destination="@id/example2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/example2Fragment"
+        android:name="com.kodeco.android.aa2023.Example2Fragment"
+        android:label="Example2Fragment">
+        <argument
+            android:name="book"
+            app:argType="com.kodeco.android.aa2023.interop.Book" />
+    </fragment>
+</navigation>

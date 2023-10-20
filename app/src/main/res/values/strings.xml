@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">AA2023</string>
+    <string name="example_1_text">Hello from Example1Fragment</string>
+    <string name="example_2_text">Hello, from Example2Fragment!</string>
+    <string name="go_to_example2fragment">Go to Example2Fragment</string>
 </resources>
