@@ -10,17 +10,19 @@ compose-bom = "2023.10.01"
 compose-ui = "1.5.4"
 viewModelVersion = "2.6.2"
 androidx-activity = "1.8.0"
-kotlinx-coroutines = "1.7.1"
+kotlinx-coroutines = "1.7.3"
 androidx-appcompat = "1.6.1"
 compose-integration-constraintlayout = "1.0.1"
 material3 = "1.2.0-alpha10"
 fonts = "1.5.4"
 retrofit="2.9.0"
-moshi="1.14.0"
+moshi="1.15.0"
 coil="2.4.0"
 navigation="2.7.4"
 espresso="3.5.1"
 fragment="1.6.1"
+hilt="2.48"
+hilt-nav="1.1.0-rc01"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -74,10 +76,15 @@ moshiCodeGen = {module="com.squareup.moshi:moshi-kotlin-codegen", version.ref="m
 androidx-fragment = { group = "androidx.fragment", name = "fragment", version = "fragment" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "fragment" }
 
+# Hilt
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref="hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-nav" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 [bundles]
 androidx-activity = ["androidx-activity", "androidx-activity-ktx", "compose-viewmodel"]

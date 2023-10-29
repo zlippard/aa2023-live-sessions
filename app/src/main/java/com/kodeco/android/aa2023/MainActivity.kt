@@ -24,37 +24,21 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import com.kodeco.android.aa2023.databinding.CustomLayoutBinding
 import com.kodeco.android.aa2023.databinding.MainActivityBinding
+import com.kodeco.android.aa2023.ui.screens.MainScreen
 import com.kodeco.android.aa2023.ui.theme.AA2023Theme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private lateinit var binding: MainActivityBinding
+//    private lateinit var binding: MainActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             AA2023Theme {
-                val backgroundPrimaryColor = MaterialTheme.colorScheme.background
-                val backgroundSecondaryColor = MaterialTheme.colorScheme.secondary
-                var backgroundColor by remember { mutableStateOf(backgroundPrimaryColor) }
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = backgroundColor
-                ) {
-                    Greeting("Android")
-
-                    LaunchedEffect(Unit) {
-                        delayedLog()
-
-                        delay(2_500L)
-                        backgroundColor = backgroundSecondaryColor
-
-                        delay(2_500L)
-                        backgroundColor = backgroundPrimaryColor
-                    }
-                }
+                MainScreen()
             }
         }
 
@@ -83,27 +67,5 @@ class MainActivity : ComponentActivity() {
 //                }
 //            }
 //        }
-    }
-
-    private suspend fun delayedLog() {
-        Log.d("MainActivity", "LaunchedEffect was called!")
-        delay(2_500L)
-        Log.d("MainActivity", "LaunchedEffect delay finished!")
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AA2023Theme {
-        Greeting("Android")
     }
 }
