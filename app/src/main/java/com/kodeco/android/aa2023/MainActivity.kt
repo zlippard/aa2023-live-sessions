@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AA2023Theme {
-                MainScreen()
+                MainScrfggggeen()
             }
         }
 
