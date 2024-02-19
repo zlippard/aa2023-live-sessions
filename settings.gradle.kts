@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "AA2023"
 include(":app")
+include(":generics")
