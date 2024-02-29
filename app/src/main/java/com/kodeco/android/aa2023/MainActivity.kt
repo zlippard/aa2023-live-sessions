@@ -3,6 +3,7 @@ package com.kodeco.android.aa2023
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.widget.TextView
 import androidx.activity.ComponentActivity
@@ -17,6 +18,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,72 +26,73 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import com.kodeco.android.aa2023.databinding.CustomLayoutBinding
 import com.kodeco.android.aa2023.databinding.MainActivityBinding
+import com.kodeco.android.aa2023.models.Country
+import com.kodeco.android.aa2023.network.CountryService
 import com.kodeco.android.aa2023.ui.theme.AA2023Theme
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import kotlinx.parcelize.Parcelize
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var binding: MainActivityBinding
+    private val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://restcountries.com/v3.1/")
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
+
+    private val service: CountryService = retrofit.create(CountryService::class.java)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             AA2023Theme {
-                val backgroundPrimaryColor = MaterialTheme.colorScheme.background
-                val backgroundSecondaryColor = MaterialTheme.colorScheme.secondary
-                var backgroundColor by remember { mutableStateOf(backgroundPrimaryColor) }
-                // A surface container using the 'background' color from the theme
+                var uiState: CountryUIState by rememberSaveable { mutableStateOf(CountryUIState.Loading) }
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = backgroundColor
                 ) {
-                    Greeting("Android")
+                    val stateStr = when (val currentUiState = uiState) {
+                        is CountryUIState.Loaded -> "Loaded with ${currentUiState.countries.size} countries"
+                        is CountryUIState.Loading -> "Loading..."
+                        is CountryUIState.Error -> "Error occurred: ${currentUiState.exception}"
+                    }
+
+                    Greeting("Android\n\n$stateStr")
 
                     LaunchedEffect(Unit) {
-                        delayedLog()
-
-                        delay(2_500L)
-                        backgroundColor = backgroundSecondaryColor
-
-                        delay(2_500L)
-                        backgroundColor = backgroundPrimaryColor
+                        delay(5_000L)
+                        uiState = try {
+                            CountryUIState.Loaded(service.getAllCountries())
+                        } catch (exception: Exception) {
+                            CountryUIState.Error(exception)
+                        }
                     }
                 }
             }
         }
-
-//        binding = MainActivityBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-//
-//        AlertDialog.Builder(this)
-//            .show()
-//
-//        binding.textView.text = "Hello there, from code!!"
-//
-//        binding.composeView.setContent {
-//            AA2023Theme {
-//                // A surface container using the 'background' color from the theme
-//                Surface(
-//                    modifier = Modifier.fillMaxSize(),
-//                    color = MaterialTheme.colorScheme.background
-//                ) {
-//                    Column {
-//                        Greeting(name = "Android")
-//
-//                        AndroidViewBinding(CustomLayoutBinding::inflate) {
-//                            customTextView.text = "Here's the custom text view!"
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
+}
 
-    private suspend fun delayedLog() {
-        Log.d("MainActivity", "LaunchedEffect was called!")
-        delay(2_500L)
-        Log.d("MainActivity", "LaunchedEffect delay finished!")
-    }
+@Parcelize
+data class CountryResponse(val countries: List<Country>?, val error: Throwable?) : Parcelable
+
+@Parcelize
+sealed class CountryUIState : Parcelable {
+    data class Loaded(val countries: List<Country>) : CountryUIState()
+
+    object Loading: CountryUIState()
+
+    data class Error(val exception: Throwable) : CountryUIState()
 }
 
 @Composable
