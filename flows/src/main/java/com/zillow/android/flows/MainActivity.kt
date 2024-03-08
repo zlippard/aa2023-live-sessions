@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
           }
 
           LaunchedEffect(Unit) {
-            greetingFlow().collect { newGreeting ->
+            greetingFlow.collect { newGreeting ->
               greeting = newGreeting
             }
           }
@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
   }
 }
 
-fun greetingFlow() : Flow<String> = flow {
+val greetingFlow : Flow<String> = flow {
   emit("Hello there.")
   delay(1_000L)
   emit("Hello there..")
