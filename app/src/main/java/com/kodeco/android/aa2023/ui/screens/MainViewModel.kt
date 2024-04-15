@@ -54,5 +54,5 @@ class MainViewModel @Inject constructor(
         }
     }
 
-//    fun getSchool(): School = repository.getSchool()
+    fun getSchool(): School = repository.getSchool()
 }

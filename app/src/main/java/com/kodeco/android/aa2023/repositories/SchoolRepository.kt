@@ -6,7 +6,7 @@ import com.kodeco.android.aa2023.interop.School
 import javax.inject.Inject
 
 interface SchoolRepository {
-    fun getSchool(): School
+    fun getSchool(value: Int): School
 }
 
 class SchoolRepositoryImpl @Inject constructor() : SchoolRepository {
