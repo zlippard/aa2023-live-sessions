@@ -24,6 +24,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import com.kodeco.android.aa2023.databinding.CustomLayoutBinding
 import com.kodeco.android.aa2023.databinding.MainActivityBinding
+import com.kodeco.android.aa2023.ui.components.SampleComposable
 import com.kodeco.android.aa2023.ui.screens.MainScreen
 import com.kodeco.android.aa2023.ui.theme.AA2023Theme
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +39,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AA2023Theme {
-                MainScreen()
+//                MainScreen()
+                SampleComposable()
             }
         }
 

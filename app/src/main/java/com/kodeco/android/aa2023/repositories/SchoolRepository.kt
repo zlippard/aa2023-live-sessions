@@ -10,7 +10,7 @@ interface SchoolRepository {
 }
 
 class SchoolRepositoryImpl @Inject constructor() : SchoolRepository {
-    override fun getSchool(): School = School(
+    override fun getSchool(value: Int): School = School(
         listOf(
             Classroom(
                 students = listOf(

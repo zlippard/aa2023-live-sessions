@@ -8,6 +8,9 @@
       <entry key="flows">
         <State />
       </entry>
+      <entry key="sampleComposableTest()">
+        <State />
+      </entry>
     </value>
   </component>
 </project>
